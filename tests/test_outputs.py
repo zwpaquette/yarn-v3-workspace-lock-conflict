@@ -68,9 +68,9 @@ def test_peer_dependencies_aligned():
     dashboard_peer = dashboard_pkg.get("peerDependencies", {}).get("react", "")
     analytics_peer = analytics_pkg.get("peerDependencies", {}).get("react", "")
     
-    assert "18" in ui_lib_peer, f"ui-lib peer dependency should be React 18.x"
-    assert "18" in dashboard_peer, f"dashboard peer dependency should be React 18.x"
-    assert "18" in analytics_peer, f"analytics peer dependency should be React 18.x"
+    assert "18" in ui_lib_peer, "ui-lib peer dependency should be React 18.x"
+    assert "18" in dashboard_peer, "dashboard peer dependency should be React 18.x"
+    assert "18" in analytics_peer, "analytics peer dependency should be React 18.x"
 
 
 def test_workspaces_structure_maintained():
