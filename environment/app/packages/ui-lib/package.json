@@ -1,0 +1,12 @@
+{
+  "name": "@monorepo/ui-lib",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/index.js",
+  "dependencies": {
+    "react": "^17.0.2"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0"
+  }
+}
