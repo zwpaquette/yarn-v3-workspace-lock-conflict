@@ -1,0 +1,143 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 13,
+            "passed": 11,
+            "failed": 2,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1771449476.6648417,
+            "stop": 1771449479.8534257
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_package_json_files_exist",
+                "status": "passed",
+                "duration": 0.0007587650006826152,
+                "start": 1771449476.7712355,
+                "stop": 1771449476.7722254,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_yarn_lock_exists",
+                "status": "passed",
+                "duration": 0.000666951998937293,
+                "start": 1771449476.7724473,
+                "stop": 1771449476.773429,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_install_state_exists",
+                "status": "passed",
+                "duration": 0.00030282400075520854,
+                "start": 1771449476.773665,
+                "stop": 1771449476.774274,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_corepack_enabled",
+                "status": "passed",
+                "duration": 0.6720524270012902,
+                "start": 1771449476.7744293,
+                "stop": 1771449477.4466705,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_peer_dependencies_aligned",
+                "status": "passed",
+                "duration": 0.003530404999764869,
+                "start": 1771449477.4468992,
+                "stop": 1771449477.4508307,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_workspaces_structure_maintained",
+                "status": "passed",
+                "duration": 0.0010143680001419852,
+                "start": 1771449477.4510157,
+                "stop": 1771449477.452333,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_yarn_install_immutable_succeeds",
+                "status": "passed",
+                "duration": 0.5622857600001225,
+                "start": 1771449477.4524913,
+                "stop": 1771449478.015347,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_no_peer_dependency_warnings",
+                "status": "passed",
+                "duration": 0.5915947799994683,
+                "start": 1771449478.0155773,
+                "stop": 1771449478.6073627,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_node_modules_populated",
+                "status": "passed",
+                "duration": 0.0040934950002338155,
+                "start": 1771449478.6075695,
+                "stop": 1771449478.6120958,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_single_react_version_installed",
+                "status": "passed",
+                "duration": 0.46034157699887146,
+                "start": 1771449478.612282,
+                "stop": 1771449479.073291,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_reproducibility_yarn_lock",
+                "status": "passed",
+                "duration": 0.724072189999788,
+                "start": 1771449479.0735486,
+                "stop": 1771449479.7982247,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_reproducibility_install_state",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0073193850003008265,
+                "start": 1771449479.7984538,
+                "stop": 1771449479.8480906,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_reproducibility_install_state():\n        \"\"\"Verify install-state.gz is identical after consecutive clean installs.\"\"\"\n        # First install state\n        install_state_path = Path(\"/app/.yarn/install-state.gz\")\n        first_content = install_state_path.read_bytes()\n        first_hash = hashlib.sha256(first_content).hexdigest()\n    \n        # Clean and reinstall\n        subprocess.run([\"rm\", \"-rf\", \"/app/node_modules\"], check=True)\n>       subprocess.run([\"rm\", \"-rf\", \"/app/packages/*/node_modules\"], shell=True, check=True)\n\n/tests/test_outputs.py:209: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\ninput = None, capture_output = False, timeout = None, check = True\npopenargs = (['rm', '-rf', '/app/packages/*/node_modules'],)\nkwargs = {'shell': True}\nprocess = <Popen: returncode: 1 args: ['rm', '-rf', '/app/packages/*/node_modules']>\nstdout = None, stderr = None, retcode = 1\n\n    def run(*popenargs,\n            input=None, capture_output=False, timeout=None, check=False, **kwargs):\n        \"\"\"Run command with arguments and return a CompletedProcess instance.\n    \n        The returned instance will have attributes args, returncode, stdout and\n        stderr. By default, stdout and stderr are not captured, and those attributes\n        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,\n        or pass capture_output=True to capture both.\n    \n        If check is True and the exit code was non-zero, it raises a\n        CalledProcessError. The CalledProcessError object will have the return code\n        in the returncode attribute, and output & stderr attributes if those streams\n        were captured.\n    \n        If timeout (seconds) is given and the process takes too long,\n         a TimeoutExpired exception will be raised.\n    \n        There is an optional argument \"input\", allowing you to\n        pass bytes or a string to the subprocess's stdin.  If you use this argument\n        you may not also use the Popen constructor's \"stdin\" argument, as\n        it will be used internally.\n    \n        By default, all communication is in bytes, and therefore any \"input\" should\n        be bytes, and the stdout and stderr will be bytes. If in text mode, any\n        \"input\" should be a string, and stdout and stderr will be strings decoded\n        according to locale encoding, or by \"encoding\" if set. Text mode is\n        triggered by setting any of text, encoding, errors or universal_newlines.\n    \n        The other arguments are the same as for the Popen constructor.\n        \"\"\"\n        if input is not None:\n            if kwargs.get('stdin') is not None:\n                raise ValueError('stdin and input arguments may not both be used.')\n            kwargs['stdin'] = PIPE\n    \n        if capture_output:\n            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:\n                raise ValueError('stdout and stderr arguments may not be used '\n                                 'with capture_output.')\n            kwargs['stdout'] = PIPE\n            kwargs['stderr'] = PIPE\n    \n        with Popen(*popenargs, **kwargs) as process:\n            try:\n                stdout, stderr = process.communicate(input, timeout=timeout)\n            except TimeoutExpired as exc:\n                process.kill()\n                if _mswindows:\n                    # Windows accumulates the output in a single blocking\n                    # read() call run on child threads, with the timeout\n                    # being done in a join() on those threads.  communicate()\n                    # _after_ kill() is required to collect that and add it\n                    # to the exception.\n                    exc.stdout, exc.stderr = process.communicate()\n                else:\n                    # POSIX _communicate already populated the output so\n                    # far into the TimeoutExpired exception.\n                    process.wait()\n                raise\n            except:  # Including KeyboardInterrupt, communicate handled that.\n                process.kill()\n                # We don't call process.wait() as .__exit__ does that for us.\n                raise\n            retcode = process.poll()\n            if check and retcode:\n>               raise CalledProcessError(retcode, process.args,\n                                         output=stdout, stderr=stderr)\nE               subprocess.CalledProcessError: Command '['rm', '-rf', '/app/packages/*/node_modules']' returned non-zero exit status 1.\n\n/root/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/subprocess.py:577: CalledProcessError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_workspace_packages_accessible",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0005115069998282706,
+                "start": 1771449479.848303,
+                "stop": 1771449479.8530314,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_workspace_packages_accessible():\n        \"\"\"Verify workspace packages can reference each other correctly.\"\"\"\n        # Check that ui-lib is accessible from node_modules\n        ui_lib_link = Path(\"/app/node_modules/@monorepo/ui-lib\")\n        dashboard_link = Path(\"/app/node_modules/@monorepo/dashboard\")\n        analytics_link = Path(\"/app/node_modules/@monorepo/analytics\")\n    \n>       assert ui_lib_link.exists(), \"ui-lib not accessible via node_modules\"\nE       AssertionError: ui-lib not accessible via node_modules\nE       assert False\nE        +  where False = exists()\nE        +    where exists = PosixPath('/app/node_modules/@monorepo/ui-lib').exists\n\n/tests/test_outputs.py:238: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            }
+        ]
+    }
+}

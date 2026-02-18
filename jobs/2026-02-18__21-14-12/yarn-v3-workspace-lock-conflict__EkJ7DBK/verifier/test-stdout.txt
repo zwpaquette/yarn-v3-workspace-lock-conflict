@@ -1,0 +1,210 @@
+Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8792 kB]
+Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [6924 B]
+Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [297 kB]
+Fetched 9350 kB in 2s (5871 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+curl is already the newest version (7.88.1-10+deb12u14).
+0 upgraded, 0 newly installed, 0 to remove and 38 not upgraded.
+no checksums to verify
+installing to /root/.local/bin
+  uv
+  uvx
+everything's installed!
+
+To add $HOME/.local/bin to your PATH, either restart your shell or run:
+
+    source $HOME/.local/bin/env (sh, bash, zsh)
+    source $HOME/.local/bin/env.fish (fish)
+============================= test session starts ==============================
+platform linux -- Python 3.13.9, pytest-8.4.1, pluggy-1.6.0
+rootdir: /tests
+plugins: json-ctrf-0.3.5
+collected 13 items
+
+../tests/test_outputs.py .FFF..F.F.FFF                                   [100%]
+
+=================================== FAILURES ===================================
+____________________________ test_yarn_lock_exists _____________________________
+
+    def test_yarn_lock_exists():
+        """Verify yarn.lock file was generated."""
+        yarn_lock = Path("/app/yarn.lock")
+>       assert yarn_lock.exists(), "yarn.lock file does not exist"
+E       AssertionError: yarn.lock file does not exist
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/app/yarn.lock').exists
+
+/tests/test_outputs.py:24: AssertionError
+__________________________ test_install_state_exists ___________________________
+
+    def test_install_state_exists():
+        """Verify .yarn/install-state.gz file was generated."""
+        install_state = Path("/app/.yarn/install-state.gz")
+>       assert install_state.exists(), ".yarn/install-state.gz does not exist"
+E       AssertionError: .yarn/install-state.gz does not exist
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/app/.yarn/install-state.gz').exists
+
+/tests/test_outputs.py:33: AssertionError
+____________________________ test_corepack_enabled _____________________________
+
+    def test_corepack_enabled():
+        """Verify Corepack is enabled and Yarn v3 is available."""
+        result = subprocess.run(
+            ["yarn", "--version"],
+            capture_output=True,
+            text=True,
+            cwd="/app"
+        )
+    
+>       assert result.returncode == 0, "yarn command failed"
+E       AssertionError: yarn command failed
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['yarn', '--version'], returncode=1, stdout='Internal Error: The "yarn-path" option has been set.../yarn/3.6.4/yarn.js:446:11180)\n    at async t (/root/.cache/node/corepack/yarn/3.6.4/yarn.js:446:10283)\n', stderr='').returncode
+
+/tests/test_outputs.py:45: AssertionError
+_____________________ test_yarn_install_immutable_succeeds _____________________
+
+    def test_yarn_install_immutable_succeeds():
+        """Verify yarn install --immutable runs successfully without errors."""
+        result = subprocess.run(
+            ["yarn", "install", "--immutable"],
+            capture_output=True,
+            text=True,
+            cwd="/app"
+        )
+    
+>       assert result.returncode == 0, (
+            f"yarn install --immutable failed with exit code {result.returncode}\n"
+            f"stdout: {result.stdout}\n"
+            f"stderr: {result.stderr}"
+        )
+E       AssertionError: yarn install --immutable failed with exit code 1
+E         stdout: Internal Error: The "yarn-path" option has been set (in /app/.yarnrc.yml), but the specified location doesn't exist (/app/.yarn/releases/yarn-3.6.4.cjs).
+E             at i (/root/.cache/node/corepack/yarn/3.6.4/yarn.js:446:11180)
+E             at async t (/root/.cache/node/corepack/yarn/3.6.4/yarn.js:446:10283)
+E         
+E         stderr: 
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['yarn', 'install', '--immutable'], returncode=1, stdout='Internal Error: The "yarn-path" option.../yarn/3.6.4/yarn.js:446:11180)\n    at async t (/root/.cache/node/corepack/yarn/3.6.4/yarn.js:446:10283)\n', stderr='').returncode
+
+/tests/test_outputs.py:95: AssertionError
+_________________________ test_node_modules_populated __________________________
+
+    def test_node_modules_populated():
+        """Verify node_modules were created and contain React packages."""
+        node_modules = Path("/app/node_modules")
+>       assert node_modules.exists(), "node_modules directory does not exist"
+E       AssertionError: node_modules directory does not exist
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/app/node_modules').exists
+
+/tests/test_outputs.py:128: AssertionError
+________________________ test_reproducibility_yarn_lock ________________________
+
+    def test_reproducibility_yarn_lock():
+        """Verify yarn.lock remains unchanged after a second clean install."""
+        # Save original lock file hash
+        yarn_lock_path = Path("/app/yarn.lock")
+>       original_content = yarn_lock_path.read_text()
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tests/test_outputs.py:170: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/root/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/root/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/app/yarn.lock'), mode = 'r', buffering = -1
+encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/app/yarn.lock'
+
+/root/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+______________________ test_reproducibility_install_state ______________________
+
+    def test_reproducibility_install_state():
+        """Verify install-state.gz is identical after consecutive clean installs."""
+        # First install state
+        install_state_path = Path("/app/.yarn/install-state.gz")
+>       first_content = install_state_path.read_bytes()
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tests/test_outputs.py:204: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/root/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/pathlib/_abc.py:625: in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/app/.yarn/install-state.gz'), mode = 'rb', buffering = -1
+encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/app/.yarn/install-state.gz'
+
+/root/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+______________________ test_workspace_packages_accessible ______________________
+
+    def test_workspace_packages_accessible():
+        """Verify workspace packages can reference each other correctly."""
+        # Check that ui-lib is accessible from node_modules
+        ui_lib_link = Path("/app/node_modules/@monorepo/ui-lib")
+        dashboard_link = Path("/app/node_modules/@monorepo/dashboard")
+        analytics_link = Path("/app/node_modules/@monorepo/analytics")
+    
+>       assert ui_lib_link.exists(), "ui-lib not accessible via node_modules"
+E       AssertionError: ui-lib not accessible via node_modules
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/app/node_modules/@monorepo/ui-lib').exists
+
+/tests/test_outputs.py:238: AssertionError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../tests/test_outputs.py::test_package_json_files_exist
+PASSED ../tests/test_outputs.py::test_peer_dependencies_aligned
+PASSED ../tests/test_outputs.py::test_workspaces_structure_maintained
+PASSED ../tests/test_outputs.py::test_no_peer_dependency_warnings
+PASSED ../tests/test_outputs.py::test_single_react_version_installed
+FAILED ../tests/test_outputs.py::test_yarn_lock_exists - AssertionError: yarn...
+FAILED ../tests/test_outputs.py::test_install_state_exists - AssertionError: ...
+FAILED ../tests/test_outputs.py::test_corepack_enabled - AssertionError: yarn...
+FAILED ../tests/test_outputs.py::test_yarn_install_immutable_succeeds - Asser...
+FAILED ../tests/test_outputs.py::test_node_modules_populated - AssertionError...
+FAILED ../tests/test_outputs.py::test_reproducibility_yarn_lock - FileNotFoun...
+FAILED ../tests/test_outputs.py::test_reproducibility_install_state - FileNot...
+FAILED ../tests/test_outputs.py::test_workspace_packages_accessible - Asserti...
+========================= 8 failed, 5 passed in 1.61s ==========================

@@ -1,0 +1,159 @@
+Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8792 kB]
+Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [6924 B]
+Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [297 kB]
+Fetched 9350 kB in 2s (6027 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+curl is already the newest version (7.88.1-10+deb12u14).
+0 upgraded, 0 newly installed, 0 to remove and 38 not upgraded.
+no checksums to verify
+installing to /root/.local/bin
+  uv
+  uvx
+everything's installed!
+
+To add $HOME/.local/bin to your PATH, either restart your shell or run:
+
+    source $HOME/.local/bin/env (sh, bash, zsh)
+    source $HOME/.local/bin/env.fish (fish)
+============================= test session starts ==============================
+platform linux -- Python 3.13.9, pytest-8.4.1, pluggy-1.6.0
+rootdir: /tests
+plugins: json-ctrf-0.3.5
+collected 13 items
+
+../tests/test_outputs.py ...........FF                                   [100%]
+
+=================================== FAILURES ===================================
+______________________ test_reproducibility_install_state ______________________
+
+    def test_reproducibility_install_state():
+        """Verify install-state.gz is identical after consecutive clean installs."""
+        # First install state
+        install_state_path = Path("/app/.yarn/install-state.gz")
+        first_content = install_state_path.read_bytes()
+        first_hash = hashlib.sha256(first_content).hexdigest()
+    
+        # Clean and reinstall
+        subprocess.run(["rm", "-rf", "/app/node_modules"], check=True)
+>       subprocess.run(["rm", "-rf", "/app/packages/*/node_modules"], shell=True, check=True)
+
+/tests/test_outputs.py:209: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['rm', '-rf', '/app/packages/*/node_modules'],)
+kwargs = {'shell': True}
+process = <Popen: returncode: 1 args: ['rm', '-rf', '/app/packages/*/node_modules']>
+stdout = None, stderr = None, retcode = 1
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['rm', '-rf', '/app/packages/*/node_modules']' returned non-zero exit status 1.
+
+/root/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/subprocess.py:577: CalledProcessError
+----------------------------- Captured stderr call -----------------------------
+rm: missing operand
+Try 'rm --help' for more information.
+______________________ test_workspace_packages_accessible ______________________
+
+    def test_workspace_packages_accessible():
+        """Verify workspace packages can reference each other correctly."""
+        # Check that ui-lib is accessible from node_modules
+        ui_lib_link = Path("/app/node_modules/@monorepo/ui-lib")
+        dashboard_link = Path("/app/node_modules/@monorepo/dashboard")
+        analytics_link = Path("/app/node_modules/@monorepo/analytics")
+    
+>       assert ui_lib_link.exists(), "ui-lib not accessible via node_modules"
+E       AssertionError: ui-lib not accessible via node_modules
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/app/node_modules/@monorepo/ui-lib').exists
+
+/tests/test_outputs.py:238: AssertionError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../tests/test_outputs.py::test_package_json_files_exist
+PASSED ../tests/test_outputs.py::test_yarn_lock_exists
+PASSED ../tests/test_outputs.py::test_install_state_exists
+PASSED ../tests/test_outputs.py::test_corepack_enabled
+PASSED ../tests/test_outputs.py::test_peer_dependencies_aligned
+PASSED ../tests/test_outputs.py::test_workspaces_structure_maintained
+PASSED ../tests/test_outputs.py::test_yarn_install_immutable_succeeds
+PASSED ../tests/test_outputs.py::test_no_peer_dependency_warnings
+PASSED ../tests/test_outputs.py::test_node_modules_populated
+PASSED ../tests/test_outputs.py::test_single_react_version_installed
+PASSED ../tests/test_outputs.py::test_reproducibility_yarn_lock
+FAILED ../tests/test_outputs.py::test_reproducibility_install_state - subproc...
+FAILED ../tests/test_outputs.py::test_workspace_packages_accessible - Asserti...
+========================= 2 failed, 11 passed in 3.19s =========================

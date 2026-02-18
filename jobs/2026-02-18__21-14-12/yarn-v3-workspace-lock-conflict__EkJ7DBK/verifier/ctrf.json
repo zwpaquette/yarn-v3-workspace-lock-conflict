@@ -1,0 +1,161 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 13,
+            "passed": 5,
+            "failed": 8,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1771449265.10532,
+            "stop": 1771449266.710165
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_package_json_files_exist",
+                "status": "passed",
+                "duration": 0.0007513419996030279,
+                "start": 1771449265.2119136,
+                "stop": 1771449265.212909,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_yarn_lock_exists",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.000791143001151795,
+                "start": 1771449265.213113,
+                "stop": 1771449265.23163,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_yarn_lock_exists():\n        \"\"\"Verify yarn.lock file was generated.\"\"\"\n        yarn_lock = Path(\"/app/yarn.lock\")\n>       assert yarn_lock.exists(), \"yarn.lock file does not exist\"\nE       AssertionError: yarn.lock file does not exist\nE       assert False\nE        +  where False = exists()\nE        +    where exists = PosixPath('/app/yarn.lock').exists\n\n/tests/test_outputs.py:24: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_install_state_exists",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.00042453799960640026,
+                "start": 1771449265.2318347,
+                "stop": 1771449265.2368033,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_install_state_exists():\n        \"\"\"Verify .yarn/install-state.gz file was generated.\"\"\"\n        install_state = Path(\"/app/.yarn/install-state.gz\")\n>       assert install_state.exists(), \".yarn/install-state.gz does not exist\"\nE       AssertionError: .yarn/install-state.gz does not exist\nE       assert False\nE        +  where False = exists()\nE        +    where exists = PosixPath('/app/.yarn/install-state.gz').exists\n\n/tests/test_outputs.py:33: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_corepack_enabled",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.4501286380000238,
+                "start": 1771449265.2369745,
+                "stop": 1771449265.691652,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_corepack_enabled():\n        \"\"\"Verify Corepack is enabled and Yarn v3 is available.\"\"\"\n        result = subprocess.run(\n            [\"yarn\", \"--version\"],\n            capture_output=True,\n            text=True,\n            cwd=\"/app\"\n        )\n    \n>       assert result.returncode == 0, \"yarn command failed\"\nE       AssertionError: yarn command failed\nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['yarn', '--version'], returncode=1, stdout='Internal Error: The \"yarn-path\" option has been set.../yarn/3.6.4/yarn.js:446:11180)\\n    at async t (/root/.cache/node/corepack/yarn/3.6.4/yarn.js:446:10283)\\n', stderr='').returncode\n\n/tests/test_outputs.py:45: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_peer_dependencies_aligned",
+                "status": "passed",
+                "duration": 0.002531940000153554,
+                "start": 1771449265.6918464,
+                "stop": 1771449265.6947694,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_workspaces_structure_maintained",
+                "status": "passed",
+                "duration": 0.00034327000048506306,
+                "start": 1771449265.6949315,
+                "stop": 1771449265.6955855,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_yarn_install_immutable_succeeds",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.31629878700005065,
+                "start": 1771449265.6957333,
+                "stop": 1771449266.019132,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_yarn_install_immutable_succeeds():\n        \"\"\"Verify yarn install --immutable runs successfully without errors.\"\"\"\n        result = subprocess.run(\n            [\"yarn\", \"install\", \"--immutable\"],\n            capture_output=True,\n            text=True,\n            cwd=\"/app\"\n        )\n    \n>       assert result.returncode == 0, (\n            f\"yarn install --immutable failed with exit code {result.returncode}\\n\"\n            f\"stdout: {result.stdout}\\n\"\n            f\"stderr: {result.stderr}\"\n        )\nE       AssertionError: yarn install --immutable failed with exit code 1\nE         stdout: Internal Error: The \"yarn-path\" option has been set (in /app/.yarnrc.yml), but the specified location doesn't exist (/app/.yarn/releases/yarn-3.6.4.cjs).\nE             at i (/root/.cache/node/corepack/yarn/3.6.4/yarn.js:446:11180)\nE             at async t (/root/.cache/node/corepack/yarn/3.6.4/yarn.js:446:10283)\nE         \nE         stderr: \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['yarn', 'install', '--immutable'], returncode=1, stdout='Internal Error: The \"yarn-path\" option.../yarn/3.6.4/yarn.js:446:11180)\\n    at async t (/root/.cache/node/corepack/yarn/3.6.4/yarn.js:446:10283)\\n', stderr='').returncode\n\n/tests/test_outputs.py:95: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_no_peer_dependency_warnings",
+                "status": "passed",
+                "duration": 0.3095152970008712,
+                "start": 1771449266.0193322,
+                "stop": 1771449266.3290403,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_node_modules_populated",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0007092480000210344,
+                "start": 1771449266.3292437,
+                "stop": 1771449266.3334575,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_node_modules_populated():\n        \"\"\"Verify node_modules were created and contain React packages.\"\"\"\n        node_modules = Path(\"/app/node_modules\")\n>       assert node_modules.exists(), \"node_modules directory does not exist\"\nE       AssertionError: node_modules directory does not exist\nE       assert False\nE        +  where False = exists()\nE        +    where exists = PosixPath('/app/node_modules').exists\n\n/tests/test_outputs.py:128: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_single_react_version_installed",
+                "status": "passed",
+                "duration": 0.3096062609993169,
+                "start": 1771449266.3336217,
+                "stop": 1771449266.6434224,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_reproducibility_yarn_lock",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0004447799992703949,
+                "start": 1771449266.644581,
+                "stop": 1771449266.6786535,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_reproducibility_yarn_lock():\n        \"\"\"Verify yarn.lock remains unchanged after a second clean install.\"\"\"\n        # Save original lock file hash\n        yarn_lock_path = Path(\"/app/yarn.lock\")\n>       original_content = yarn_lock_path.read_text()\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:170: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/root/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:546: in read_text\n    return PathBase.read_text(self, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/root/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/pathlib/_abc.py:632: in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = PosixPath('/app/yarn.lock'), mode = 'r', buffering = -1\nencoding = 'utf-8', errors = None, newline = None\n\n    def open(self, mode='r', buffering=-1, encoding=None,\n             errors=None, newline=None):\n        \"\"\"\n        Open the file pointed to by this path and return a file object, as\n        the built-in open() function does.\n        \"\"\"\n        if \"b\" not in mode:\n            encoding = io.text_encoding(encoding)\n>       return io.open(self, mode, buffering, encoding, errors, newline)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/app/yarn.lock'\n\n/root/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:537: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_reproducibility_install_state",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.00040387099943473004,
+                "start": 1771449266.6788542,
+                "stop": 1771449266.7041318,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_reproducibility_install_state():\n        \"\"\"Verify install-state.gz is identical after consecutive clean installs.\"\"\"\n        # First install state\n        install_state_path = Path(\"/app/.yarn/install-state.gz\")\n>       first_content = install_state_path.read_bytes()\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:204: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/root/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/pathlib/_abc.py:625: in read_bytes\n    with self.open(mode='rb') as f:\n         ^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = PosixPath('/app/.yarn/install-state.gz'), mode = 'rb', buffering = -1\nencoding = None, errors = None, newline = None\n\n    def open(self, mode='r', buffering=-1, encoding=None,\n             errors=None, newline=None):\n        \"\"\"\n        Open the file pointed to by this path and return a file object, as\n        the built-in open() function does.\n        \"\"\"\n        if \"b\" not in mode:\n            encoding = io.text_encoding(encoding)\n>       return io.open(self, mode, buffering, encoding, errors, newline)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/app/.yarn/install-state.gz'\n\n/root/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:537: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_workspace_packages_accessible",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0007803309999871999,
+                "start": 1771449266.7043514,
+                "stop": 1771449266.7097766,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_workspace_packages_accessible():\n        \"\"\"Verify workspace packages can reference each other correctly.\"\"\"\n        # Check that ui-lib is accessible from node_modules\n        ui_lib_link = Path(\"/app/node_modules/@monorepo/ui-lib\")\n        dashboard_link = Path(\"/app/node_modules/@monorepo/dashboard\")\n        analytics_link = Path(\"/app/node_modules/@monorepo/analytics\")\n    \n>       assert ui_lib_link.exists(), \"ui-lib not accessible via node_modules\"\nE       AssertionError: ui-lib not accessible via node_modules\nE       assert False\nE        +  where False = exists()\nE        +    where exists = PosixPath('/app/node_modules/@monorepo/ui-lib').exists\n\n/tests/test_outputs.py:238: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            }
+        ]
+    }
+}

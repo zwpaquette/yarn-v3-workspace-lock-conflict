@@ -85,8 +85,24 @@ fs.writeFileSync(path, JSON.stringify(pkg, null, 2) + '\n');
 console.log('Added resolutions to root package.json');
 EOF
 
+# Step 7: Fix .yarnrc.yml to remove conflicting yarnPath
+echo "Step 7: Fixing .yarnrc.yml configuration..."
+node << 'EOF'
+const fs = require('fs');
+const path = '/app/.yarnrc.yml';
+
+// Read current config
+let config = fs.readFileSync(path, 'utf8');
+
+// Remove yarnPath line (conflicts with Corepack)
+config = config.replace(/^yarnPath:.*$/m, '').trim();
+
+fs.writeFileSync(path, config + '\n');
+console.log('Removed yarnPath from .yarnrc.yml (using Corepack instead)');
+EOF
+
 # Step 8: Remove old node_modules and lock file to start fresh
-echo "Step 7: Cleaning old dependencies..."
+echo "Step 8: Cleaning old dependencies..."
 rm -rf /app/node_modules
 rm -rf /app/packages/*/node_modules
 rm -rf /app/.yarn/cache
@@ -94,11 +110,11 @@ rm -rf /app/.yarn/install-state.gz
 rm -f /app/yarn.lock
 
 # Step 9: Install dependencies with Yarn v3
-echo "Step 8: Installing dependencies with Yarn v3..."
+echo "Step 9: Installing dependencies with Yarn v3..."
 yarn install
 
 # Step 10: Verify installation works with --immutable flag
-echo "Step 9: Testing immutable install..."
+echo "Step 10: Testing immutable install..."
 rm -rf /app/node_modules
 rm -rf /app/packages/*/node_modules
 rm -rf /app/.yarn/cache
@@ -107,7 +123,7 @@ rm -rf /app/.yarn/install-state.gz
 yarn install --immutable
 
 # Step 11: Prove reproducibility - do a second clean install
-echo "Step 10: Proving reproducibility with second clean install..."
+echo "Step 11: Proving reproducibility with second clean install..."
 
 # Save first install state
 cp /app/yarn.lock /tmp/yarn.lock.first
@@ -122,7 +138,7 @@ rm -rf /app/.yarn/install-state.gz
 yarn install --immutable
 
 # Compare lock files
-echo "Step 11: Verifying reproducibility..."
+echo "Step 12: Verifying reproducibility..."
 if diff /app/yarn.lock /tmp/yarn.lock.first > /dev/null; then
     echo "✓ yarn.lock is identical after reinstall"
 else

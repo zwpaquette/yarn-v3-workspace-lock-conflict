@@ -1,0 +1,70 @@
+==========================================
+Resolving Yarn v3 Workspace Peer Dependencies
+==========================================
+Step 1: Enabling Corepack and setting Yarn v3...
+Preparing yarn@3.6.4 for immediate activation...
+Step 2: Analyzing peer dependency conflicts...
+Current state:
+  - ui-lib requires React ^17.0.2
+  - dashboard requires React ^18.2.0
+  - analytics requires React ^18.3.0
+Solution: Align all packages to React 18.x
+Step 3: Updating ui-lib to React 18...
+Updated ui-lib to React ^18.2.0
+Step 4: Aligning dashboard peer dependencies...
+Updated dashboard peer dependencies
+Step 5: Aligning analytics dependencies...
+Updated analytics to React ^18.2.0
+Step 6: Adding resolutions to root package.json...
+Added resolutions to root package.json
+Step 7: Fixing .yarnrc.yml configuration...
+Removed yarnPath from .yarnrc.yml (using Corepack instead)
+Step 8: Cleaning old dependencies...
+Step 9: Installing dependencies with Yarn v3...
+➤ YN0000: ┌ Resolution step
+➤ YN0000: └ Completed in 1s 125ms
+➤ YN0000: ┌ Fetch step
+➤ YN0013: │ js-tokens@npm:4.0.0 can't be found in the cache and will be fetched from the remote registry
+➤ YN0013: │ loose-envify@npm:1.4.0 can't be found in the cache and will be fetched from the remote registry
+➤ YN0013: │ react-dom@npm:18.2.0 can't be found in the cache and will be fetched from the remote registry
+➤ YN0013: │ react@npm:18.2.0 can't be found in the cache and will be fetched from the remote registry
+➤ YN0013: │ scheduler@npm:0.23.2 can't be found in the cache and will be fetched from the remote registry
+➤ YN0000: └ Completed in 1s 345ms
+➤ YN0000: ┌ Link step
+➤ YN0000: └ Completed
+➤ YN0000: Done in 2s 622ms
+Step 10: Testing immutable install...
+➤ YN0000: ┌ Resolution step
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Fetch step
+➤ YN0013: │ js-tokens@npm:4.0.0 can't be found in the cache and will be fetched from the remote registry
+➤ YN0013: │ loose-envify@npm:1.4.0 can't be found in the cache and will be fetched from the remote registry
+➤ YN0013: │ react-dom@npm:18.2.0 can't be found in the cache and will be fetched from the remote registry
+➤ YN0013: │ react@npm:18.2.0 can't be found in the cache and will be fetched from the remote registry
+➤ YN0013: │ scheduler@npm:0.23.2 can't be found in the cache and will be fetched from the remote registry
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Link step
+➤ YN0000: └ Completed
+➤ YN0000: Done in 0s 252ms
+Step 11: Proving reproducibility with second clean install...
+➤ YN0000: ┌ Resolution step
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Fetch step
+➤ YN0013: │ js-tokens@npm:4.0.0 can't be found in the cache and will be fetched from the remote registry
+➤ YN0013: │ loose-envify@npm:1.4.0 can't be found in the cache and will be fetched from the remote registry
+➤ YN0013: │ react-dom@npm:18.2.0 can't be found in the cache and will be fetched from the remote registry
+➤ YN0013: │ react@npm:18.2.0 can't be found in the cache and will be fetched from the remote registry
+➤ YN0013: │ scheduler@npm:0.23.2 can't be found in the cache and will be fetched from the remote registry
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Link step
+➤ YN0000: └ Completed
+➤ YN0000: Done in 0s 236ms
+Step 12: Verifying reproducibility...
+✓ yarn.lock is identical after reinstall
+✓ install-state.gz is identical after reinstall
+==========================================
+✓ Task completed successfully!
+✓ All peer dependencies resolved
+✓ yarn install --immutable succeeds
+✓ Reproducibility proven
+==========================================

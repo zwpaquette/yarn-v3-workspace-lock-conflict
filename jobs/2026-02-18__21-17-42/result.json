@@ -1,0 +1,29 @@
+{
+    "id": "f3b96f3d-3225-4961-8c49-d875dd5e4e4d",
+    "started_at": "2026-02-18T21:17:42.221074",
+    "finished_at": "2026-02-18T21:18:10.964960",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__adhoc": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "yarn-v3-workspace-lock-conflict__SMLRJj4"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

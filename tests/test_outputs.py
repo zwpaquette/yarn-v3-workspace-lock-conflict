@@ -206,7 +206,9 @@ def test_reproducibility_install_state():
     
     # Clean and reinstall
     subprocess.run(["rm", "-rf", "/app/node_modules"], check=True)
-    subprocess.run(["rm", "-rf", "/app/packages/*/node_modules"], shell=True, check=True)
+    subprocess.run(["rm", "-rf", "/app/packages/ui-lib/node_modules"], check=True)
+    subprocess.run(["rm", "-rf", "/app/packages/dashboard/node_modules"], check=True)
+    subprocess.run(["rm", "-rf", "/app/packages/analytics/node_modules"], check=True)
     subprocess.run(["rm", "-rf", "/app/.yarn/cache"], check=True)
     subprocess.run(["rm", "-f", "/app/.yarn/install-state.gz"], check=True)
     
@@ -230,6 +232,15 @@ def test_reproducibility_install_state():
 
 def test_workspace_packages_accessible():
     """Verify workspace packages can reference each other correctly."""
+    # Ensure node_modules exists (in case this runs after cleanup tests)
+    if not Path("/app/node_modules").exists():
+        subprocess.run(
+            ["yarn", "install", "--immutable"],
+            capture_output=True,
+            cwd="/app",
+            check=True
+        )
+    
     # Check that ui-lib is accessible from node_modules
     ui_lib_link = Path("/app/node_modules/@monorepo/ui-lib")
     dashboard_link = Path("/app/node_modules/@monorepo/dashboard")

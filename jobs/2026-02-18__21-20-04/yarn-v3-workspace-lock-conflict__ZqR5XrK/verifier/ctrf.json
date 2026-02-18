@@ -1,0 +1,137 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 13,
+            "passed": 13,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1771449618.6398978,
+            "stop": 1771449622.3495846
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_package_json_files_exist",
+                "status": "passed",
+                "duration": 0.0005346470006770687,
+                "start": 1771449618.742486,
+                "stop": 1771449618.743501,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_yarn_lock_exists",
+                "status": "passed",
+                "duration": 0.0003781630002777092,
+                "start": 1771449618.7436829,
+                "stop": 1771449618.7448142,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_install_state_exists",
+                "status": "passed",
+                "duration": 0.00028126199958933285,
+                "start": 1771449618.7449734,
+                "stop": 1771449618.745998,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_corepack_enabled",
+                "status": "passed",
+                "duration": 0.5309736170001997,
+                "start": 1771449618.746176,
+                "stop": 1771449619.2777646,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_peer_dependencies_aligned",
+                "status": "passed",
+                "duration": 0.0012501100000008591,
+                "start": 1771449619.277999,
+                "stop": 1771449619.2799315,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_workspaces_structure_maintained",
+                "status": "passed",
+                "duration": 0.00036323100084700854,
+                "start": 1771449619.2801049,
+                "stop": 1771449619.2809634,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_yarn_install_immutable_succeeds",
+                "status": "passed",
+                "duration": 0.58468476500002,
+                "start": 1771449619.2811086,
+                "stop": 1771449619.8665087,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_no_peer_dependency_warnings",
+                "status": "passed",
+                "duration": 0.5745072110003093,
+                "start": 1771449619.8667536,
+                "stop": 1771449620.4419506,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_node_modules_populated",
+                "status": "passed",
+                "duration": 0.001487415999690711,
+                "start": 1771449620.4421952,
+                "stop": 1771449620.44411,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_single_react_version_installed",
+                "status": "passed",
+                "duration": 0.457596950000152,
+                "start": 1771449620.4442842,
+                "stop": 1771449620.9020689,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_reproducibility_yarn_lock",
+                "status": "passed",
+                "duration": 0.7317619910008943,
+                "start": 1771449620.9022787,
+                "stop": 1771449621.6346276,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_reproducibility_install_state",
+                "status": "passed",
+                "duration": 0.7112669030011602,
+                "start": 1771449621.634881,
+                "stop": 1771449622.3473055,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_workspace_packages_accessible",
+                "status": "passed",
+                "duration": 0.001287831000809092,
+                "start": 1771449622.3475473,
+                "stop": 1771449622.349212,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            }
+        ]
+    }
+}
